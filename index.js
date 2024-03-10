@@ -14,7 +14,19 @@ app.use("/articles", articleRouter);
 
 // Home Route
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  const articles = [
+    {
+      title: "Dummy Article",
+      created: new Date(),
+      description: "Dummy Description for this whole article",
+    },
+    {
+      title: "Dummy Article 2",
+      created: new Date(),
+      description: "Dummy Description 2 for this whole article",
+    },
+  ];
+  res.render("index.ejs", { article1: articles });
 });
 
 // Start the server
