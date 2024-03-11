@@ -1,9 +1,13 @@
 import express from "express";
+import mongoose from "mongoose";
 import articleRouter from "./routes/articles.js";
 import bodyParser from "body-parser";
 
 const app = express();
 const port = 3000;
+
+// Database
+mongoose.connect("mongodb://localhost/blog");
 
 // Middleware
 app.use(express.static("public"));
@@ -26,7 +30,7 @@ app.get("/", (req, res) => {
       description: "Dummy Description 2 for this whole article",
     },
   ];
-  res.render("index.ejs", { article1: articles });
+  res.render("articles/index.ejs", { article1: articles });
 });
 
 // Start the server
