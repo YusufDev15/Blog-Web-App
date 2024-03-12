@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 const app = express();
 const port = 3000;
 
-// Database
+// Mongo Database
 mongoose.connect("mongodb://localhost/blog");
 
 // Middleware
