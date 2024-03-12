@@ -12,9 +12,7 @@ mongoose.connect("mongodb://localhost/blog");
 // Middleware
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Routes
-app.use("/articles", articleRouter);
+app.use(express.urlencoded({ extended: false }));
 
 // Home Route
 app.get("/", (req, res) => {
@@ -32,6 +30,8 @@ app.get("/", (req, res) => {
   ];
   res.render("articles/index.ejs", { article1: articles });
 });
+
+app.use("/articles", articleRouter);
 
 // Start the server
 app.listen(port, () => {
