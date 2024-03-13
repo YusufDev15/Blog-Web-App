@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Route for creating a new article (GET request)
 router.get("/new", (req, res) => {
-  res.render("articles/new.ejs");
+  res.render("articles/new.ejs", { article: new Article() });
 });
 
 // Route for viewing article details (GET REQUEST)
@@ -19,9 +19,9 @@ router.post("/", async (req, res) => {
   });
   try {
     // Saving the new article to the database
-    article = await article.save();
+    const savedArticle = await article.save();
     // redirects to the URL to view the newly created article
-    res.redirect(`/articles/${article.id}`);
+    res.redirect(`/articles/${savedArticle.id}`);
   } catch (err) {
     res.render("articles/new.ejs", { article: article });
   }
