@@ -5,14 +5,26 @@ const router = express.Router();
 
 // Route for creating a new article (GET request)
 router.get("/new", (req, res) => {
-  res.render("articles/new.ejs", { article: new Article() });
+  try {
+    res.render("articles/new.ejs", { article: new Article() });
+  } catch {
+    console.error("Error fetching articles:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // Route for viewing article details (GET REQUEST)
 router.get("/:id", async (req, res) => {
-  const article = await Article.findById(req.params.id);
-  if (article == null) res.redirect("/");
-  res.render("articles/display.ejs", { article: article });
+  try {
+    const article = await Article.findById(req.params.id);
+    if (!article) {
+      return res.redirect("/");
+    }
+    res.render("articles/display.ejs", { article: article });
+  } catch (err) {
+    console.error("Error fetching articles:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // Route for creating a new article (POST request)
