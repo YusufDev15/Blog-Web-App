@@ -7,16 +7,16 @@ const router = express.Router();
 router.get("/new", (req, res) => {
   try {
     res.render("articles/new.ejs", { article: new Article() });
-  } catch {
+  } catch (err) {
     console.error("Error fetching articles:", err);
     res.status(500).send("Internal Server Error");
   }
 });
 
 // Route for viewing article details (GET REQUEST)
-router.get("/:id", async (req, res) => {
+router.get("/:slug", async (req, res) => {
   try {
-    const article = await Article.findById(req.params.id);
+    const article = await Article.findOne({ slug: req.params.slug });
     if (!article) {
       return res.redirect("/");
     }
@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
     // Saving the new article to the database
     const savedArticle = await article.save();
     // redirects to the URL to view the newly created article
-    res.redirect(`/articles/${savedArticle.id}`);
+    res.redirect(`/articles/${savedArticle.slug}`);
   } catch (err) {
     console.error(err);
     res.render("articles/new.ejs", { article: article });

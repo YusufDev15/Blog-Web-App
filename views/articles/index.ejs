@@ -24,6 +24,9 @@
             <%= post.created.toLocaleDateString() %>
           </div>
           <div class="card-text mb-2"><%= post.description %></div>
+          <a href="articles/<%= post.slug %>" class="btn btn-primary"
+            >Read More</a
+          >
         </div>
       </div>
       <%})%>
