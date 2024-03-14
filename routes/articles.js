@@ -40,8 +40,20 @@ router.post("/", async (req, res) => {
     // redirects to the URL to view the newly created article
     res.redirect(`/articles/${savedArticle.slug}`);
   } catch (err) {
-    console.error(err);
+    console.error("Error saving article:", err);
     res.render("articles/new.ejs", { article: article });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    // deletes the article with the specified ID
+    await Article.findByIdAndDelete(req.params.id);
+    res.redirect("/")
+    res.status(204).end();
+  } catch (err) {
+    console.error("Error deleting article:", err);
+    res.status(500).send("Internal Server Error");
   }
 });
 

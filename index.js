@@ -2,7 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import Article from "./models/article.js";
 import articleRouter from "./routes/articles.js";
-import bodyParser from "body-parser";
+import methodOverride from "method-override";
+// import bodyParser from "body-parser";
 
 const app = express();
 const port = 3000;
@@ -12,8 +13,9 @@ mongoose.connect("mongodb://localhost/blog");
 
 // Middleware
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 // Home Route
 app.get("/", async (req, res) => {
