@@ -1,5 +1,6 @@
 import express from "express";
 import Article from "./../models/article.js";
+
 const router = express.Router();
 
 // Route for creating a new article (GET request)
@@ -8,11 +9,15 @@ router.get("/new", (req, res) => {
 });
 
 // Route for viewing article details (GET REQUEST)
-router.get("/:id", (req, res) => {});
+router.get("/:id", async (req, res) => {
+  const article = await Article.findById(req.params.id);
+  if (article == null) res.redirect("/");
+  res.render("articles/display.ejs", { article: article });
+});
 
 // Route for creating a new article (POST request)
 router.post("/", async (req, res) => {
-  const article = new Article({
+  let article = new Article({
     title: req.body.title,
     description: req.body.description,
     markdown: req.body.markdown,
@@ -23,6 +28,7 @@ router.post("/", async (req, res) => {
     // redirects to the URL to view the newly created article
     res.redirect(`/articles/${savedArticle.id}`);
   } catch (err) {
+    console.error(err);
     res.render("articles/new.ejs", { article: article });
   }
 });

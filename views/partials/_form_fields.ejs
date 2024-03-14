@@ -12,7 +12,7 @@
 <!-- Form group for the article description -->
 <div class="form-group">
   <label for="description">Description</label>
-  <textarea required name="description" id="description" class="form-control">
+  <textarea name="description" id="description" class="form-control">
 
 <%= article.description %></textarea
   >
@@ -20,8 +20,8 @@
 <!-- Form group for the article markdown content -->
 <div class="form-group">
   <label for="markdown">Markdown</label>
-  <textarea name="markdown" id="markdown" class="form-control">
-<% article.markdown %></textarea
+  <textarea required name="markdown" id="markdown" class="form-control">
+<%= article.markdown %></textarea
   >
 </div>
 <br />
