@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import Article from "./models/article.js";
 import articleRouter from "./routes/articles.js";
 import bodyParser from "body-parser";
 
@@ -15,20 +16,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
 
 // Home Route
-app.get("/", (req, res) => {
-  const articles = [
-    {
-      title: "Dummy Article",
-      created: new Date(),
-      description: "Dummy Description for this whole article",
-    },
-    {
-      title: "Dummy Article 2",
-      created: new Date(),
-      description: "Dummy Description 2 for this whole article",
-    },
-  ];
-  res.render("articles/index.ejs", { article1: articles });
+app.get("/", async (req, res) => {
+  try {
+    const articles = await Article.find().sort({
+      created: "desc",
+    });
+    res.render("articles/index.ejs", { articles: articles });
+  } catch (err) {
+    console.error("Error fetching articles:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.use("/articles", articleRouter);
