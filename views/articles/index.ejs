@@ -13,10 +13,13 @@
     <title>Blog</title>
   </head>
   <body>
+    <header>
+      <div class="container header">
+        <h1 class="mb-4">Blog Articles</h1>
+        <a href="/articles/new" class="btn btn-success">New Article</a>
+      </div>
+    </header>
     <div class="container">
-      <h1 class="mb-4">Blog Articles</h1>
-      <a href="/articles/new" class="btn btn-success">New Article</a>
-
       <% articles.forEach(post => { %>
       <div class="card mt-4">
         <div class="card-body">
