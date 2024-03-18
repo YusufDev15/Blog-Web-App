@@ -13,6 +13,11 @@ router.get("/new", (req, res) => {
   }
 });
 
+router.get("/edit/:id", async (req, res) => {
+  const article = await Article.findById(req.params.id);
+  res.render("articles/edit.ejs", { article: article });
+});
+
 // Route for viewing article details (GET REQUEST)
 router.get("/:slug", async (req, res) => {
   try {
@@ -49,7 +54,7 @@ router.delete("/:id", async (req, res) => {
   try {
     // deletes the article with the specified ID
     await Article.findByIdAndDelete(req.params.id);
-    res.redirect("/")
+    res.redirect("/");
     res.status(204).end();
   } catch (err) {
     console.error("Error deleting article:", err);
